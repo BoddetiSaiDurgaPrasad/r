@@ -1,0 +1,64 @@
+containers
+ 13 & 14)
+ 
+ # su - student
+ 
+ $ wget given_url
+ 
+ $ ls
+   (check for container file created by url)
+ 
+ $ podman login registry.lab.example.com
+   (admin,redhat321)
+ 
+ $ podman build -t monitor .
+   (builds the container image)
+ 
+ $ podman images
+   (check for image)
+ 
+ $ logout
+  
+ # mkdir /opt/files /opt/processed
+
+ # chmod 777 /opt/files /opt/processed
+ 
+ # chown student:student /opt/files /opt/processed
+ 
+ # su - student
+ 
+ $ podman run -d --name ascii2pdf -v /opt/files:/opt/incoming:Z -v /opt/processed:/opt/outcoming:Z localhost/monitor:latest
+   (builds the container)
+ 
+ $ podman ps
+   (check for container)
+ 
+ $ mkdir -p ~/.config/systemd/user
+ 
+ $ cd ~/.config/systemd/user
+ 
+ $ podman generate systemd --name ascii2pdf --files --new
+ 
+ $ podman stop ascii2pdf
+ 
+ $ podman rm ascii2pdf
+   (for removing container)
+ 
+ $ podman ps
+   (check whether our container is deleted or not)
+ 
+ $ systemctl --user daemon-reload
+ 
+ $ systemctl --user start container-ascii2pdf.service
+ 
+ $ systemctl --user enable container-ascii2pdf.service
+   (for re-enabling the container)
+ 
+ $ podman ps
+   (check whether the deleted container recovered or not)
+   
+ $ logout
+ 
+ # loginctl enable-linger student
+ 
+ # loginctl show-user student
